@@ -16,6 +16,7 @@
   --cqa-bad: #fc3048;
   --cqa-gross-bg: #ffeef0;
   --cqa-purple: #9451ba;
+  --cqa-logo: #13c76c;
   --cqa-blue: #0381cf;
   --cqa-role-operator: #48b06c;
   --cqa-role-operator-bg: #e8f5ec;
@@ -35,9 +36,11 @@
     --cqa-border: #2a2e31;
     --cqa-accent-soft: #183526;
     --cqa-gross-bg: #3a1c21;
+    --cqa-logo: #20e07d;
   }
 }
 :root[data-theme="dark"] {
+    --cqa-logo: #20e07d;
     --cqa-bg: #0f1112;
     --cqa-surface: #1a1d1f;
     --cqa-soft: #23272a;
@@ -51,10 +54,19 @@
 
 body.cqa { background: var(--cqa-bg); letter-spacing: -.005em; }
 
-/* ---- шапка: белая, логотип с иконкой, вкладки как таб-бар приложения (иконка + подпись, активная — зелёная) ---- */
+/* ---- шапка: белая, логотип FREEDOM CQA, вкладки как таб-бар приложения (иконка + подпись, активная — зелёная) ---- */
 .cqa-header { background: var(--cqa-surface); border-bottom: 0; box-shadow: 0 1px 0 var(--cqa-border); gap: 20px; min-height: 64px; }
-.cqa-logo { display: inline-flex; align-items: center; gap: 6px; background: none; color: var(--cqa-text); padding: 0; font-size: 20px; font-weight: 800; letter-spacing: -.02em; }
-.cqa-logo img { width: 34px; height: 34px; }
+/* логотип FREEDOM CQA: векторный (web/img/freedom-cqa.svg) через маску, цвет — var(--cqa-logo), поэтому подстраивается под тему */
+.cqa-logo { display: inline-flex; align-items: center; flex: none; padding: 4px; margin-left: -4px; border-radius: 10px; background: none; color: var(--cqa-logo); }
+.cqa-logo-mark {
+  display: block; height: 32px; aspect-ratio: 989 / 184; background: currentColor;
+  -webkit-mask: url(../img/freedom-cqa.svg) left center / contain no-repeat; mask: url(../img/freedom-cqa.svg) left center / contain no-repeat;
+  transition: opacity .15s, transform .15s;
+}
+.cqa-logo:hover .cqa-logo-mark { opacity: .85; }
+.cqa-logo:active .cqa-logo-mark { transform: scale(.97); }
+.cqa-logo:focus-visible { outline: 2px solid var(--cqa-accent); outline-offset: 2px; }
+@media (forced-colors: active) { .cqa-logo-mark { forced-color-adjust: none; background: LinkText; } }
 .cqa-nav { gap: 2px; }
 .cqa-nav a { display: inline-flex; align-items: center; gap: 7px; padding: 8px 12px; border-radius: 14px; color: #8f9399; font-weight: 600; font-size: 15px; }
 .cqa-nav a:hover { background: var(--cqa-soft); color: var(--cqa-text); }
@@ -64,6 +76,15 @@ body.cqa { background: var(--cqa-bg); letter-spacing: -.005em; }
 .cqa-nav a.cqa-active .cqa-nav-ic { filter: none; transform: scale(1.08); }
 .cqa-badge { background: var(--cqa-bad); min-width: 20px; height: 20px; line-height: 20px; border-radius: 10px; font-weight: 700; font-size: 12px; }
 .cqa-role select { border-radius: 12px; border-color: transparent; background: var(--cqa-soft); padding: 7px 10px; }
+/* шапка в одну строку и на ноутбуке 1280px (с полосой прокрутки): чуть плотнее вкладки; на средних экранах — только щит,
+   а на телефоне логотип и так стоит отдельной строкой, поэтому там снова полный */
+@media (max-width: 1320px) {
+  .cqa-header { gap: 16px; }
+  .cqa-nav a { padding: 8px 9px; gap: 6px; }
+}
+@media (min-width: 901px) and (max-width: 1250px) {
+  .cqa-logo-mark { aspect-ratio: 1; -webkit-mask-image: url(../img/freedom-shield.svg); mask-image: url(../img/freedom-shield.svg); }
+}
 
 /* ---- заголовки экранов: крупные и жирные, с 3D-иконкой экрана ---- */
 .cqa-main { gap: 18px; }
