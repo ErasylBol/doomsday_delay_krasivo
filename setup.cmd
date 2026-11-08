@@ -24,8 +24,14 @@ echo [2/4] Python environment for the model: local-model\.venv
 if not exist "local-model\.venv\Scripts\python.exe" py -3 -m venv "local-model\.venv"
 if not exist "local-model\.venv\Scripts\python.exe" goto fail
 
+rem Old pip (bundled with Python 3.11 and earlier) rejects wheels from the PyTorch index
+rem ("inconsistent Name"), so update pip first.
+"local-model\.venv\Scripts\python.exe" -m pip install --upgrade pip
+if errorlevel 1 goto fail
+
 echo [3/4] PyTorch for CPU, about 200 MB, one time
-"local-model\.venv\Scripts\python.exe" -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+rem torch comes from the PyTorch index, its dependencies may come from PyPI.
+"local-model\.venv\Scripts\python.exe" -m pip install torch --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
 if errorlevel 1 goto fail
 
 echo [4/4] Other model packages

@@ -41,7 +41,8 @@
 ```
 npm install
 py -3 -m venv local-model\.venv
-local-model\.venv\Scripts\python.exe -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+local-model\.venv\Scripts\python.exe -m pip install --upgrade pip
+local-model\.venv\Scripts\python.exe -m pip install torch --index-url https://download.pytorch.org/whl/cpu --extra-index-url https://pypi.org/simple
 local-model\.venv\Scripts\python.exe -m pip install -r local-model\requirements.txt
 copy .env.example .env
 ```
