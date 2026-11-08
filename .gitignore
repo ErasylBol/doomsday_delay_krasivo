@@ -1,0 +1,25 @@
+node_modules/
+.env
+storage/
+*.tmp
+__pycache__/
+*.pyc
+.venv/
+# Большие сгенерированные данные локальной модели: пересобираются `npm run datagen` (~15 с)
+local-model/data/synth_dialogs.json
+local-model/data/synth_labels.jsonl
+local-model/data/pairs_*.jsonl
+local-model/data/aug_dev_*
+local-model/data/synth_natural*.json
+local-model/data/events.json
+local-model/data/cache/
+local-model/runs/
+# Адаптеры дообучения по апелляциям — локальное состояние, создаются кнопкой «Дообучить»
+local-model/weights/adapters/
+# выборка синтетических test-диалогов для сценария scripts/local-demo.mjs (создаётся скриптом)
+data/SYNTHTEST.json
+# служебные папки ИИ-инструментов разработки
+.playwright-mcp/
+.claude/
+.remember/
+.codebase-memory/
